@@ -38,7 +38,7 @@ class PostsController extends Controller
         $this->validate($request,[
             'title' => ['required', 'string', 'max:100'],
             'date' => ['required', 'date'],
-            'body' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
         ]);
         $post = new Post;
         $post->title = $request->input('title');
@@ -81,7 +81,7 @@ class PostsController extends Controller
         $this->validate($request,[
             'title' => ['required', 'string', 'max:100'],
             'date' => ['required', 'date'],
-            'body' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
         ]);
 
         $post = Post::find($id);
@@ -103,7 +103,7 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        if(auth()->user()->Type !== 3 ){
+        if(auth()->user()->Type != 3 ){
             return redirect('/posts')->with('error','Unauthorized Page');
         }
         $post->delete();

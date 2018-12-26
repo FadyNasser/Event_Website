@@ -35,9 +35,9 @@ class EventsController extends Controller
             return redirect('/posts')->with('error','Unauthorized Page');
         }
         $this->validate($request,[
-            'title' => 'required',
-            'date' => 'required',
-            'body' => 'required'
+            'title' => ['required', 'string', 'max:100'],
+            'date' => ['required', 'date'],
+            'body' => ['required', 'string'],
         ]);
         $post = new Post;
         $post->title = $request->input('title');
@@ -78,9 +78,9 @@ class EventsController extends Controller
         }
 
         $this->validate($request,[
-            'title' => 'required',
-            'date' => 'required',
-            'body' => 'required'
+            'title' => ['required', 'string', 'max:100'],
+            'date' => ['required', 'date'],
+            'body' => ['required', 'string'],
         ]);
 
         $post = Post::find($id);
@@ -102,7 +102,7 @@ class EventsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        if(auth()->user()->Type !== 3){
+        if(auth()->user()->Type != 3){
             return redirect('/posts')->with('error','Unauthorized Page');
         }
         $post->delete();

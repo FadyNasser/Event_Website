@@ -60,13 +60,28 @@ class ReviewsController extends Controller
 
     public function update(Request $request, $id)
     {
-       //
+        if(auth()->user()->Type == 2){
+            return redirect('/reviews')->with('error','Unauthorized Page');
+        }
+        $this->validate($request,[
+            'title' => ['required', 'string', 'max:100'],
+            'name' => ['nullable','string', 'max:100'],
+            'description' => ['nullable','string'],
+            'rating' => ['required','int','max:10']
+        ]);
+        $review = Review::find($id);
+        $review->title = $request->input('title');
+        $review->name = $request->input('name');
+        $review->description = $request->input('description');
+        $review->rating = $request->input('rating');
+        $review->save();
+        return redirect('/reviews')->with('success','Review updated Successfully');
     }
 
     public function destroy($id)
     {
         $review = Review::find($id);
-        if(auth()->user()->Type !== 3){
+        if(auth()->user()->Type != 3){
             return redirect('/reviews')->with('error','Unauthorized Page');
         }
         $review->delete();

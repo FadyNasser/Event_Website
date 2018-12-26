@@ -12,14 +12,14 @@
         </div>
 
         <div class = "form-group">
-                <?php echo e(Form::label('date','Title')); ?>
+                <?php echo e(Form::label('date','Date')); ?>
 
-                <?php echo e(Form::text('date','',['class' => 'form-control','placeholder' => 'Date in form YYYY-MM-DD'])); ?>
+                <?php echo e(Form::text('date',$post->date,['class' => 'form-control','placeholder' => 'Date in form YYYY-MM-DD'])); ?>
 
         </div>
 
         <div class = "form-group">
-                <?php echo e(Form::label('body','Title')); ?>
+                <?php echo e(Form::label('body','Description')); ?>
 
                 <?php echo e(Form::textarea('body',$post->body,['id'=> 'article-ckeditor','class' => 'form-control','placeholder' => 'Body Text'])); ?>
 

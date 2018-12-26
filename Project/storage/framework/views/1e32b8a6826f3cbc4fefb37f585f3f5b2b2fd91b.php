@@ -15,7 +15,7 @@
 
     <?php if(!Auth::guest()): ?>
 
-        <?php if(auth()->user()->Type !== 2): ?>
+        <?php if(auth()->user()->Type != 2): ?>
             <a href="/reviews/<?php echo e($review->id); ?>/edit" class="btn btn-default">Edit</a>
         <?php endif; ?>
         <?php if(auth()->user()->Type == 3): ?>

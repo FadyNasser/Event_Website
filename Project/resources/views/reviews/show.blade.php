@@ -16,7 +16,7 @@
 
     @if(!Auth::guest())
 
-        @if (auth()->user()->Type !== 2)
+        @if (auth()->user()->Type != 2)
             <a href="/reviews/{{$review->id}}/edit" class="btn btn-default">Edit</a>
         @endif
         @if (auth()->user()->Type == 3)

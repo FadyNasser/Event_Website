@@ -20,7 +20,7 @@
 
     <?php if(!Auth::guest()): ?>
 
-        <?php if(auth()->user()->Type !== 1): ?>
+        <?php if(auth()->user()->Type != 1): ?>
             <a href="/posts/<?php echo e($post->id); ?>/edit" class="btn btn-default">Edit</a>
         <?php endif; ?>
         <?php if(auth()->user()->Type == 3): ?>    

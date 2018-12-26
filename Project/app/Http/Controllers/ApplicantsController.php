@@ -13,7 +13,8 @@ class ApplicantsController extends Controller
     public function index()
     {
         $title = "Apply Now";
-        return view ('apply');
+        $posts = Post::select('title')->where('Upcomming','1')->get();
+        return view ('apply')->with('title',$title)->with('posts',$posts);
     }
 
     public function store(Request $request)

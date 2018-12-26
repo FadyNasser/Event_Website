@@ -21,7 +21,7 @@
 
     @if(!Auth::guest())
 
-        @if (auth()->user()->Type !== 1)
+        @if (auth()->user()->Type != 1)
             <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a>
         @endif
         @if (auth()->user()->Type == 3)    

@@ -66,8 +66,8 @@
     
                                 <div class="col-md-6">
                                     <select id="Type" type="text" class="form-control" name="Type" required>
-                                        <option value="1">Designer</option>
-                                        <option value="2">Blogger</option>
+                                        <option value="1">Customer Service</option>
+                                        <option value="2">Organizer</option>
                                         <option value="3" selected>Admin</option>
                                     </select> 
                                 </div>

@@ -2,7 +2,7 @@
 
 @section('content')
         <div class = "jumbotron text-center">
-            <h1>Apply now </h1>
+            <h1>{!!$title!!}</h1>
         </div>
         
         @guest
@@ -24,7 +24,8 @@
 
         <div class = "form-group">
             {{Form::label('event','Event Number')}}
-            {{Form::text('event','',['class' => 'form-control','placeholder' => 'Enter Event ID'])}}
+            {{-- {{Form::text('event','',['class' => 'form-control','placeholder' => 'Enter Event ID'])}} --}}
+            {!!Form::select('event',$posts,null,['class' => 'form-control'])!!}
         </div>
 
         {{Form::submit('Apply Now',['class' => 'btn btn-primary'])}}

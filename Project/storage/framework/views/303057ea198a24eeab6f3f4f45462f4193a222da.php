@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-inverse navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
-            <?php echo e(config('app.name', 'Laravel')); ?>
+            <?php echo e(config('app.name', 'Traventure')); ?>
 
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?php echo e(__('Toggle navigation')); ?>">

@@ -12,7 +12,7 @@
 
         <div class = "form-group">
                 {{Form::label('date','Date')}}
-                {{Form::text('date','',['class' => 'form-control','placeholder' => 'Date in form YYYY-MM-DD'])}}
+                {{Form::text('date',$post->date,['class' => 'form-control','placeholder' => 'Date in form YYYY-MM-DD'])}}
         </div>
 
         <div class = "form-group">
