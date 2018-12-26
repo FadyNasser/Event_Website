@@ -22,7 +22,7 @@
 
         <div class="form-group ">
                 {{Form::label('rating','Rating')}}
-                {{Form::text('rating','',['class' => 'form-control','placeholder' => 'Enter a number form 1 to 5 (5 for highest rating)'])}}
+                {{Form::text('rating','',['class' => 'form-control','placeholder' => 'Enter a number form 1 to 10 (10 for highest rating)'])}}
         </div>
         {{Form::submit('Submit',['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}

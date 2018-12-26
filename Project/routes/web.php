@@ -18,10 +18,11 @@ Route::get('/about', 'PagesController@about');
 
 Route::get('/services', 'PagesController@services');
 
-Route::get('/contact', 'PagesController@contact');
+//Route::get('/contact', 'PagesController@contact');
 
 Route::get('/reviews', 'PagesController@reviews');
 
+//Route::get('/apply', 'ApplicantsController@reviews');
 
 Route::resource('posts','PostsController');
 
@@ -29,6 +30,11 @@ Route::resource('events','EventsController');
 
 Route::resource('reviews','ReviewsController');
 
+Route::resource('apply','ApplicantsController');
+
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+
+Route::get('/contact', 'ContactController@show');
+Route::post('/contact',  'ContactController@mailToAdmin');

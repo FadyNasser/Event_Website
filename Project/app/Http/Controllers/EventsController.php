@@ -14,42 +14,26 @@ class EventsController extends Controller
         $this->middleware('auth',['except'=> ['index','show']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        //$posts = Post::all(); //Eloquent
-        //$posts = Post::orderBy('title','desc')->get();
-        //$posts = Post::orderBy('title','desc')->take(1)->get();
-        //$post = Post::where('title','Post Two')->get();
-        //$posts = DB::select('SELECT * FROM posts');
-        #$posts = Post::orderBy('created_at','desc')->paginate(5);
         $posts = Post::where('Upcomming','0') -> orderBy('date','desc')->paginate(5);
-        return view('posts.index')->with('posts',$posts);
+        $title = "Past Events";
+        return view('posts.index')->with('posts',$posts)->with('title',$title);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        if(auth()->user()->Type == 1){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
         return view('posts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        if(auth()->user()->Type == 1){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
         $this->validate($request,[
             'title' => 'required',
             'date' => 'required',
@@ -72,46 +56,27 @@ class EventsController extends Controller
         return redirect('/posts')->with('success','Post Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
         $post = Post::find($id);
         return view('posts.show')->with('post',$post);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $post = Post::find($id);
-
-        //check user id
-        if(auth()->user()->id !== $post->user_id || auth()->user()->Type !== 3){
+        if(auth()->user()->Type == 1){
             return redirect('/posts')->with('error','Unauthorized Page');
         }
+        $post = Post::find($id);
         return view('posts.edit')->with('post',$post);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        
+        if(auth()->user()->Type == 1){
+            return redirect('/posts')->with('error','Unauthorized Page');
+        }
+
         $this->validate($request,[
             'title' => 'required',
             'date' => 'required',
@@ -134,19 +99,20 @@ class EventsController extends Controller
         return redirect('/posts')->with('success','Post Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $post = Post::find($id);
-        if(auth()->user()->id !== $post->user_id){
+        if(auth()->user()->Type !== 3){
             return redirect('/posts')->with('error','Unauthorized Page');
         }
         $post->delete();
         return redirect('/posts')->with('success','Post Deleted Successfully');
     }
 }
+
+    //$posts = Post::all(); //Eloquent
+    //$posts = Post::orderBy('title','desc')->get();
+    //$posts = Post::orderBy('title','desc')->take(1)->get();
+    //$post = Post::where('title','Post Two')->get();
+    //$posts = DB::select('SELECT * FROM posts');
+    #$posts = Post::orderBy('created_at','desc')->paginate(5);

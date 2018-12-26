@@ -9,16 +9,16 @@
 
     <hr>
     
-
     <small>Written on <?php echo e($review->created_at); ?> by <?php echo e($review->name); ?></small>
     
     <hr>
 
     <?php if(!Auth::guest()): ?>
 
-        <?php if(auth()->user()->Type == 3): ?>
+        <?php if(auth()->user()->Type !== 2): ?>
             <a href="/reviews/<?php echo e($review->id); ?>/edit" class="btn btn-default">Edit</a>
-            
+        <?php endif; ?>
+        <?php if(auth()->user()->Type == 3): ?>
             <?php echo Form::open(['action' => ['PostsController@destroy',$review->id],'method' => 'Post','class' => 'pull-right']); ?>
 
                 <?php echo e(Form::hidden('_method','DELETE')); ?>

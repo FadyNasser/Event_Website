@@ -8,41 +8,31 @@ use DB;
 
 class ReviewsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth',['except'=> ['index','show','create','store']]);
+    }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $reviews = Review::orderBy('created_at','desc')->paginate(5);
-        return view('reviews.index')->with('reviews',$reviews);
+        $title = "Customer's reviews";
+        return view('reviews.index')->with('reviews',$reviews)->with('title',$title);;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('reviews.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title' => 'required',
-            //'name' => 'required',
-            //'description' => 'required',
-            'rating' => 'required'
+            'title' => ['required', 'string', 'max:100'],
+            'name' => ['nullable','string', 'max:100'],
+            'description' => ['nullable','string'],
+            'rating' => ['required','int','max:10']
         ]);
         $review = new Review;
         $review->title = $request->input('title');
@@ -53,50 +43,26 @@ class ReviewsController extends Controller
         return redirect('/reviews')->with('success','Review added Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
-        #$review = Review::find($id);
         $review = Review::find($id);
         return view('reviews.show')->with('review',$review);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $review = Review::find($id);
+        if(auth()->user()->Type == 2){
+            return redirect('/reviews')->with('error','Unauthorized Page');
+        }
         return view('reviews.edit')->with('review',$review);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $review = Review::find($id);
